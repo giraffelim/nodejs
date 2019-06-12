@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>글 내용</title>
+    <link rel="stylesheet" href="/css/board.css">
+    <script>
+        function del(){
+            if(confirm("삭제하시겠습니까?")){
+                location.href="/delete/<%=data.id%>";
+            }
+        }
+    </script>
+    <style>
+        th{
+            width:20%
+        }
+        td{
+            width:80%
+        }
+    </style>
+</head>
+<body>
+    <h1>글내용</h1>
+    <hr/>
+        <table width="80%" border="1">
+            <tr>
+                <th>ID</th>
+                <td><%=data.id%></td>
+            </tr>
+            <tr>
+                <th>TITLE</th>
+                <td><%=data.title%></td>
+            </tr>
+            <tr>
+                <th>Content</th>
+                <td><pre><%=data.content%></pre></td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td><%=data.wdate%></td>
+            </tr>
+        </table>
+        <p></p>
+        <a href="/insert">등록</a>
+        <a href="/edit/<%=data.id%>">수정</a>
+        <a href="#" onclick="del()">삭제</a>
+        <a href="/">목록</a>
+</body>
+</html>

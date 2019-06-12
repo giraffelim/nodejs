@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>게시글 작성</title>
+    <link rel="stylesheet" href="css/board.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function(){
+            $.datepicker.setDefaults({ dateFormat: 'yy-mm-dd'});
+            $("#datepicker").datepicker();
+        });
+    </script>
+</head>
+
+<body>
+    <div id="wrap">
+        <H1>게시글 작성</H1>
+        <form method="POST">
+            <table width="100%">
+                <tr>
+                    <th>제목</th>
+                    <td><input type="text" name="title" size="50" height="150px"></td>
+                </tr>
+                <tr>
+                    <th>내용</th>
+                    <td><textarea rows="10" cols="50" name="content"></textarea></td>
+                </tr>
+                <tr>
+                    <th>작성일</th>
+                    <td><input type="text" name="wdate" id="datepicker"></td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:right;"><input type="button" value="목록"
+                            onclick="location.href='/'"><input type="submit" value="등록"></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+
+</html>

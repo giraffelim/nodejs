@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- viewport 사용 --------------------------------->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat client</title>
+    <!-- jQuery Mobile CDN ---------------------------------->
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    
+    <!-- socket.io.js 사용 ------------------------------->
+    <script src="/socket.io/socket.io.js"></script>
+    
+    <style>
+        #msg{
+            margin-bottom:5px;
+        }
+        #msg span{
+            display: inline-block;
+            border-radius: 5px;
+            padding:5px;
+            line-height: 0.5px;
+            background-color: deepskyblue;
+            text-shadow: none;
+        }
+        #content div:nth-child(2n){text-align: left;}
+        #content div:nth-child(2n+1){text-align: right;}
+        
+        .left{
+            text-align: left;
+            background-color: orange;
+        }
+        
+        
+    </style>
+    <script>
+        $(document).ready(function(){
+            var socket=io.connect();//연결
+            
+            //message처리
+            socket.on('message',function(data){
+                var output="";
+                output+="<div id='msg'>"
+                output+="<span>"
+                output+="   <h3>"+data.name+"</h3>";
+                output+="   <p>"+data.message+"</p>";
+                output+="   <p>"+data.date+"</p>";
+                output+="</span>"
+                output+="</div>";
+                
+                // id가 content인 ul태그 안에 추가
+                $(output).appendTo("#content");
+                //스크롤 이동
+                $(document).scrollTop($(document).height());
+
+
+//                $("#content").listview('refresh');//목록 새로 고침
+                
+            });
+            
+            //버튼클릭시 메시지 전송
+            $("button").click(function(){
+                socket.emit("message",{
+                    name:$("#name").val(),
+                    message:$("#message").val(),
+                    date:new Date().toLocaleTimeString()
+                });
+            });
+            
+            
+        });
+    </script>
+</head>
+<body>
+   <div data-role="page" id="page1">
+       <div data-role="header">
+           멀티 채팅
+       </div>
+       <div data-role="cotent">
+            <h1>이름</h1>
+            <input type="text" id="name">
+            <a data-role="button" href="#page2">시작</a>
+       </div>     
+   </div>
+   <div data-role="page" id="page2">
+       <div data-role="header">
+           멀티 채팅
+       </div>
+       <div data-role="content">
+           <div id="content">
+               
+               
+           </div>
+           <input type="text" id="message">
+           <button>전송</button>
+       </div>
+   </div>
+    
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>게시판</title>
+    <link rel="stylesheet" href="css/board.css">
+</head>
+<body>
+    <div id="wrap">
+    <H1>게시글 리스트</H1>
+    <table width="100%">
+        <tr>
+            <th>NO</th><th>TITLE</th><th>DATE</th>
+        </tr>
+     
+            <%data.forEach(function(item,index){%>
+                <tr>
+                    <td><%=item.id%></td>
+                    <td width="60%"><a href="/view/<%=item.id%>"><%=item.title%></a></td>
+                    <td><%=item.wdate%></td>
+                </tr>
+            <%}) %>
+
+        <tr>
+            <td colspan="3" style="text-align:right;">
+                <input type="button" value="채팅" onclick="location.href='/chat'">
+                <input type="button" value="게시글작성" onclick="location.href='/insert'"></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

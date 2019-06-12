@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <title>게시판</title>
+    <script>
+        $(function () {
+            $("input[name=reSubmit]").click(function () {
+                if ($("input[name=reName]").val().length == 0) {
+                    alert("작성자를 입력해주세요");
+                    $("input[name=reName]").focus();
+                    return false;
+                }
+                if ($("input[name=rePass]").val().length == 0) {
+                    alert("비밀번호를 입력해주세요");
+                    $("input[name=rePass]").focus();
+                    return false;
+                }
+                if ($("textarea[name=reContent]").val().length == 0) {
+                    alert("내용을 입력해주세요");
+                    $("textarea[name=reContent]").focus();
+                    return false;
+                }
+
+                $("[name=frm]").submit();
+            });
+        });
+
+        function test() {
+            console.log("TESTING");
+        }
+    </script>
+    <link rel="stylesheet" href="/css/board.css">
+    <style>
+        th {
+            width: 20%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <H1>게시글 상세보기</H1>
+        <table width="100%">
+
+            <tr>
+                <th>제목</th>
+                <td><%=data.title%></td>
+            </tr>
+
+            <tr>
+                <th>본문</th>
+                <td><%=data.content%></td>
+            </tr>
+
+            <tr>
+                <th>작성일</th>
+                <td><%=data.wdate%></td>
+            </tr>
+
+            <tr>
+                <td style="text-align:left;"><input type="button" value="수정"
+                        onclick="location.href='/update/<%=data.id%>'">
+                    <input type="button" value="삭제" onclick="location.href='/delete/<%=data.id%>'"></td>
+                <td colspan="3" style="text-align:right;">
+                    <input type="button" value="목록" onclick="location.href='/'">
+                    <input type="button" value="게시글작성" onclick="location.href='/insert'"></td>
+            </tr>
+        </table>
+
+        <!-- 댓글 리스트 -->
+        <fieldset>
+            <legend>게시글에 등록된 댓글</legend>
+            <table width="100%" class="replyList">
+                <%rData.forEach(function(item,index){%>
+                <tr>
+                    <th>작성자</th>
+                    <td><%=item.writer%></td>
+                </tr>
+                <tr>
+                    <th>Content</th>
+                    <td><%=item.content%></td>
+                </tr>
+                <tr class="reLast">
+                    <td colspan="3" style="text-align: right;"><input type="button" value="삭제" onclick="location.href='/replyDelete/<%=item.no%>,<%=data.id%>'"></td>
+                </tr>
+                <tr>
+                    <td class="reHidden">HELLO</td>
+                </tr>
+                <%})%>%>
+            </table>
+        </fieldset>
+        <!-- 댓글 작성 -->
+        <table width="100%" class="replyTable">
+            <form action="/replyInsert/<%=data.id%>" method="POST" name="frm">
+                <input type="hidden" name="id" value="<%=data.id%>">
+                <tr>
+                    <th>작성자</th>
+                    <td style="text-align:left;"><input type="text" name="reName"></td>
+                </tr>
+                <tr>
+                    <th>암호</th>
+                    <td style="text-align:left;"><input type="password" name="rePass"
+                            style="font-family:system-ui !important;"></td>
+                </tr>
+                <tr>
+                    <th>댓글</th>
+                    <td style="text-align:left;"><textarea rows="20" name="reContent"></textarea></td>
+                </tr>
+                <tr>
+                    <td style="text-align:right;" colspan="3"><input type="button" name="reSubmit" value="등록"></td>
+                </tr>
+            </form>
+        </table>
+    </div>
+</body>
+
+</html>
